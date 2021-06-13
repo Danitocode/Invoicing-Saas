@@ -24,22 +24,6 @@ from rest_framework.documentation import include_docs_urls
 from rest_framework.schemas import get_schema_view
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = ['url', 'username', 'email', 'is_staff']
-
-
-# ViewSets define the view behavior.
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-
-# Routers provide an easy way of automatically determining the URL conf.
-router = routers.DefaultRouter()
-router.register(r'users', UserViewSet)
-
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
@@ -47,7 +31,8 @@ urlpatterns = [
     path('api/v1/', include('payparc_invoicing.urls', namespace='invoice-routing')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     # Django url's
-    path('admin/', admin.site.urls),    # DRF url's
+    path('admin/', admin.site.urls),
+    # DRF url's
     path('', include_docs_urls(title='Invoice System')),
     path('schema', get_schema_view(
         title="Invoice System",
