@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  invoicing:
+    image: invoicing2container.azurecr.iotest:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - static:/code/static
+      - .:/code
+
+  nginx:
+    image: nginx:1.13
+    ports:
+      - 8000:80
+    volumes:
+      - ./config/nginx/conf.d:/etc/nginx/conf.d
+      - static:/code/static
+    depends_on:
+      - invoicing
+
+volumes:
+  .:
+  static:

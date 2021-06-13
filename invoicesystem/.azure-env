@@ -1,0 +1,48 @@
+# This is a placeholder file for the environment variables you'll need to
+# configure for your application.
+#
+# - Make a copy and name it something appropriate.
+#   - e.g. .azure-env
+# - Fill in the values.
+# - Load the values into your environment before interacting with Azure:
+#
+#    $ # Export values from file into environment:
+#    $ export $(grep -v '^#' .azure-env | xargs)
+#    $ # Now interact with (e.g.) the production PosgreSQL instance:
+#    $ ./manage.py showmigrations
+#    ...
+
+# The Azure Resource Group and Location to use for you applicaiton.
+# - If using the VS Code App Service extension to create your app,
+#   use the values it provides
+AZ_GROUP='invoicing2resource'
+AZ_LOCATION='centralus'
+
+# The name you choose for your App Service application.
+APP_SERVICE_APP_NAME='invoicing2app'
+
+# Server Name, Admin User and Admin Password for creating the Azure
+# PostgreSQL server.
+POSTGRES_SERVER_NAME='invoicing2server'
+POSTGRES_ADMIN_USER=''
+POSTGRES_ADMIN_PASSWORD=''
+
+# The Azure PostgreSQL server host.
+# This will not be available until after creating the database server.
+# (Will be output at end if running `./bin/createdb.py`)
+POSTGRES_HOST=''
+
+# The application DB name you want to use.
+# `./bin/createdb.py` will offer to create this db after creating the server.
+APP_DB_NAME=''
+
+# The production settings module. `tutorial.azure` is the example provided.
+DJANGO_SETTINGS_MODULE='invoicesystem_root.settings'
+
+# Azure Storages Account Name, Container Name and Key for staticfiles.
+# Once these are set you can run collectstatic to push the staticfiles.
+AZ_STORAGE_ACCOUNT_NAME=''
+AZ_STORAGE_KEY=''
+AZ_STORAGE_CONTAINER=''
+
+

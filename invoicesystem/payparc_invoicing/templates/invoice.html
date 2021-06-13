@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<title>Payparc - Invoice</title>
+	    <style type="text/css">
+            body{
+                font-family: "sanserif", sans-serif;
+            }
+            .invoice-title {
+                text-align: left;
+                color: #4bacc6;
+            }
+
+            .invoice-title h1 {
+                float: bottom;
+                color: #4bacc6;
+            }
+            .invoice-logo {
+                float: right;
+            }
+            .invoice-title p {
+                color: #4bacc6;
+            }
+            #invoice-number{
+                text-align: right;
+            }
+            #invoice-number h1{
+                font-size: 25px;
+            }
+            #invoice-number p{
+                font-size: 12px;
+            }
+            .blue-font{
+                color: #4bacc6;
+
+            }
+            .table-items{
+                margin-top: 50px;
+            }
+            #footer {
+                margin-top: 2000%;
+            }
+    @page {
+        size: a4 portrait;
+        @frame header_frame {           /* Static Frame */
+            -pdf-frame-content: header_content;
+            left: 50pt; width: 512pt; top: 50pt; height: 40pt;
+        }
+        @frame content_frame {          /* Content Frame */
+            left: 50pt; width: 512pt; top: 0pt; height: 632pt;
+        }
+        @frame footer_frame {           /* Another static Frame */
+            -pdf-frame-content: footer_content;
+            left: 50pt; width: 512pt; top: 772pt; height: 20pt;
+        }
+    }
+        </style>
+    </head>
+	<body style="min-height: 100vh;">
+         <table>
+          <tr>
+            <th>
+                <div class="invoice-title">
+                    <b style="font-size: 19px;">PAYPARC GLOBAL SOLUTIONS SL</b><br>
+                    <p style="font-size: 12px;">CIF: B16656779<br>
+                    Espai Emprenbit - Edifici Disset<br>
+                    Parc Bit - 07120<br>
+                    Palma de Mallorca - España
+                    </p>
+                </div>
+
+            </th>
+            <th style="margin-left: 200px">
+                <div class="col-md-2 invoice-logo"><img src="../static/images/payparc.png" alt="payparc.png" width="300px"></div>
+            </th>
+          </tr>
+        </table>
+
+
+         <div id="invoice-number">
+                <div>
+                    <b style="font-size: 35px;">Invoice</b><br>
+                    <p style="font-size: 15px;font-family: sanserif,sans-serif;">#INV-{{invoice.created_at|date:"Ymd"}}-{{ invoice.id }}<br>
+                    </p>
+                </div>
+         </div>
+
+         <table>
+          <tr>
+            <th>
+                <div class="invoice-title" style="color: dimgray">
+                    <b style="font-size: 19px;">{{ customer.name }}</b><br>
+                    <p style="font-size: 12px;color: dimgray">
+                        CIF: {{ customer.vat_id }}<br>
+                        C/{{ customer.address }} – {{ customer.zip }}<br>
+                        {{ customer.city }} - {{ customer.country }}
+                    </p>
+                </div>
+
+            </th>
+            <th style="margin-left: 50px; font-family: sanserif,sans-serif;">
+                <pre style="text-align: left">
+                    Date:        <em class="blue-font">{{invoice.created_at|date:"Y-m-d"}}</em><br>
+                    Terms:       <em class="blue-font">{{ invoice.invoice_state }}</em><br>
+                    Client No:   <em class="blue-font">No: {{ customer.id }}</em>
+                </pre>
+            </th>
+          </tr>
+        </table>
+
+         <table class="table-items" border="1" cellpadding="7" cellspacing="15">
+          <tr>
+            <th style="text-align: left;color: aliceblue;background-color: #1f497d;margin: 20px">Description</th>
+            <th style="text-align: left;color: aliceblue;background-color: #1f497d;margin: 20px">Amount</th>
+          </tr>
+         {% for item in items %}
+          <tr>
+              <td style="margin-left: 20px">
+                    <p>
+                        {{ item.description }}
+                    </p>
+                </td>
+            <td style="margin-left: 20px"> {{ item.unit_price }}  {{ invoice.currency }}</td>
+          </tr>
+         {% endfor %}
+          </table>
+
+            <div style="margin-left: 50px">
+                <pre style="text-align: right; font-family: sanserif,sans-serif;">
+                    Subtotal                        <em class="blue-font">{{ total_amount }}</em><br>
+                    IVA (21%)                       <em class="blue-font">{{ amount_iva }}</em><br>
+                    <em style="background-color: #1f497d; color: aliceblue">TOTAL                             </em><em style="background-color: #1f497d; color: aliceblue">{{ final_amount }}</em>
+                </pre>
+            </div>
+
+         <table>
+          <tr>
+            <th>
+                <div class="invoice-title">
+                    <b style="font-size: 19px;">IBAN: ES2521008612950200180466</b><br>
+                    <p style="font-size: 12px;">PAYPARC GLOBAL SOLUTIONS SL<br>
+                    CaixaBank<br><br>
+                    Palma de Mallorca
+                    </p>
+                </div>
+
+            </th>
+            <th style="margin-left: 200px">
+                <div class="col-md-2 invoice-logo"><img src="../static/images/paid.png" alt="payparc.ico" width="300px"></div>
+            </th>
+          </tr>
+        </table>
+
+
+        <!-- Content for Static Frame 'footer_frame' -->
+        <div id="footer_content"  style="color: #d5d5d5">
+            <em>Por favor indique el número de factura cuando efectúe el pago por transferencia bancaria (&copy; - Payparc SL) - page <pdf:pagenumber>of <pdf:pagecount></em>
+        </div>
+    </body>
+
+</html>
